@@ -1,6 +1,5 @@
 package com.vipran.tippy
 
-import android.animation.ArgbEvaluator
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,7 +7,6 @@ import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 
 private const val INITIAL_TIP_PERC = 15
 private const val INITIAL_TIP_AMOUNT = 0.0
@@ -64,22 +62,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateTipDescription(tipPerc: Int) {
         val tipDescription = when (tipPerc) {
-            in 0..9 -> "Poor"
-            in 10..14 -> "Acceptable"
-            in 15..19 -> "Good"
-            in 20..24 -> "Great"
-            else -> "Amazing"
+            in 0..9 -> "\uD83D\uDE1E"
+            in 10..14 -> "\uD83D\uDE12"
+            in 15..19 -> "\uD83D\uDE42"
+            in 20..24 -> "\uD83D\uDE00"
+            else -> "\uD83D\uDE0D"
         }
 
         tvTipDescription.text = tipDescription
-
-        val color = ArgbEvaluator().evaluate(
-            tipPerc.toFloat() / seekBarTipPerc.max,
-            ContextCompat.getColor(this, R.color.tip_worst),
-            ContextCompat.getColor(this, R.color.tip_best)
-        ) as Int
-
-        tvTipDescription.setTextColor(color)
     }
 
     private fun computeTipAndTotal() {
